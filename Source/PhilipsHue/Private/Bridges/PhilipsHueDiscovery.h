@@ -64,6 +64,10 @@ public:
 		return State;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "PhilipsHue|Discovery")
+
+		TArray<UPhilipsHueBridge*> GetBridgeArray();
+
 public:
 
 	/** A delegate that is invoked when bridge discovery finished. */
@@ -93,4 +97,7 @@ private:
 	/** Current discovery state. */
 	UPROPERTY(transient)
 	EPhilipsHueDiscoveryState State;
+
+	UPROPERTY(transient)
+	TArray<UPhilipsHueBridge*> BridgeArray;
 };

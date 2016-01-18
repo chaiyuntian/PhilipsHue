@@ -84,6 +84,11 @@ void UPhilipsHueDiscovery::ProcessHttpResponse(FHttpResponsePtr HttpResponse, bo
 		Bridge->Configuration.IpAddress = BridgeInfo.InternalIpAddress;
 	}
 
+	if (BridgesById.Num() > 0){ 
+		BridgeArray.Empty();
+		BridgesById.GenerateValueArray(BridgeArray); 
+	}
+
 	OnDiscoveryCompleted.Broadcast(EPhilipsHueDiscoveryResult::Success);
 }
 
@@ -97,4 +102,10 @@ void UPhilipsHueDiscovery::HandleHttpRequestComplete(FHttpRequestPtr HttpRequest
 	FFunctionGraphTask::CreateAndDispatchWhenReady([=]() {
 		ProcessHttpResponse(HttpResponse, bSucceeded);
 	}, TStatId(), nullptr, ENamedThreads::GameThread);
+}
+
+TArray<UPhilipsHueBridge*> UPhilipsHueDiscovery::GetBridgeArray()
+{
+	
+	return BridgeArray;
 }
